@@ -48,8 +48,8 @@ jobs:
           node -e "let pkg=require('./package.json'); pkg.version='$UPDATED_VERSION'; require('fs').writeFileSync('./package.json', JSON.stringify(pkg, null, 2));"
 
           # Commit the updated package.json
-          git config user.name "imani"
-          git config user.email "imany.mohsen@gmail.com"
+          git config user.name "mohiz"
+          git config user.email "mohsen.tamiz@gmail.com"
           git add package.json
           git commit -m "Bump package version to $UPDATED_VERSION"
           git tag $UPDATED_VERSION
