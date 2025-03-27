@@ -1,6 +1,6 @@
 {
   "name": "test_action",
-  "version": "1.3.2-4f6c0a6",
+  "version": "1.5.0-f0134fd",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
