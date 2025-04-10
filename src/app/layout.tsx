@@ -39,16 +39,33 @@ export default function RootLayout({
             console.log("Cookiebot loaded");
             console.log({ Cookiebot: Cookiebot });
 
-            if (Cookiebot && Cookiebot.consents) {
-              if (Cookiebot.consents.statistics) {
+            if (Cookiebot && Cookiebot.consent) {
+              if (Cookiebot.consent.statistics) {
                 // Load Google Analytics
                 console.log("Loading Google Analytics");
-                console.log({ Cookiebot: Cookiebot.consents });
+                const gtagScript = document.createElement('script');
+                gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-JYS079JHCG";
+                gtagScript.async = true;
+                document.head.appendChild(gtagScript);
+
+                gtagScript.onload = () => {
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', 'G-JYS079JHCG');
+                };
               } else {
                 console.log("Statistics consent not given");
               }
+
+              if (Cookiebot.consent.marketing) {
+                console.log("Marketing consent given");
+                // Load marketing-related scripts here
+              } else {
+                console.log("Marketing consent not given");
+              }
             } else {
-              console.log("Cookiebot or consents not available");
+              console.log("Cookiebot or consent not available");
             }
           }
 
