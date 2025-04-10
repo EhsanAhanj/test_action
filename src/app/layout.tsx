@@ -37,30 +37,35 @@ export default function RootLayout({
         {`
           function loadScriptsBasedOnConsent() {
             console.log("Cookiebot loaded");
-            console.log({Cookiebot: Cookiebot});
-            
+            console.log({ Cookiebot: Cookiebot });
+
             if (Cookiebot && Cookiebot.consents) {
               if (Cookiebot.consents.statistics) {
                 // Load Google Analytics
                 console.log("Loading Google Analytics");
-                console.log({Cookiebot: Cookiebot.consents});
+                console.log({ Cookiebot: Cookiebot.consents });
+              } else {
+                console.log("Statistics consent not given");
               }
+            } else {
+              console.log("Cookiebot or consents not available");
             }
           }
 
-          window.addEventListener('CookieConsent', loadScriptsBasedOnConsent);  `}
+          // Call the function immediately if Cookiebot is already loaded
+          if (typeof Cookiebot !== "undefined") {
+            loadScriptsBasedOnConsent();
+          }
+
+          // Listen for the CookieConsent event
+          window.addEventListener('CookieConsent', loadScriptsBasedOnConsent);
+        `}
       </Script>
 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <Script
-          id="cookie-declaration"
-          src="https://consent.cookiebot.com/217a9fe1-4c5a-47bc-b6cd-7e498392da7f/cd.js"
-          type="text/javascript"
-          async
-        />
       </body>
     </html>
   );
