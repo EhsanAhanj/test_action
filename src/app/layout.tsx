@@ -37,6 +37,7 @@ export default function RootLayout({
         {`
           function loadScriptsBasedOnConsent() {
             if (Cookiebot && Cookiebot.consents) {
+              // Handle statistics consent
               if (Cookiebot.consents.statistics) {
                 // Load Google Analytics
                 const gtagScript = document.createElement('script');
@@ -50,6 +51,10 @@ export default function RootLayout({
                   gtag('js', new Date());
                   gtag('config', 'G-JYS079JHCG');
                 };
+              } else {
+                // Remove Google Analytics cookies if consent is withdrawn
+                document.cookie = '_ga=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                document.cookie = '_gid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
               }
             }
           }
