@@ -40,6 +40,8 @@ export default function RootLayout({
               // Handle statistics consent
               if (Cookiebot.consents.statistics) {
                 // Load Google Analytics
+                console.log("Loading Google Analytics");
+                console.log({Cookiebot:Cookiebot.consents});
                 const gtagScript = document.createElement('script');
                 gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-JYS079JHCG";
                 gtagScript.async = true;
