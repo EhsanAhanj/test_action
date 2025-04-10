@@ -36,28 +36,19 @@ export default function RootLayout({
       <Script id="cookiebot-init" strategy="afterInteractive">
         {`
           function loadScriptsBasedOnConsent() {
+            console.log("Cookiebot loaded");
+            console.log({Cookiebot: Cookiebot});
+            
             if (Cookiebot && Cookiebot.consents) {
               if (Cookiebot.consents.statistics) {
                 // Load Google Analytics
                 console.log("Loading Google Analytics");
                 console.log({Cookiebot: Cookiebot.consents});
-                const gtagScript = document.createElement('script');
-                gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-JYS079JHCG";
-                gtagScript.async = true;
-                document.head.appendChild(gtagScript);
-
-                gtagScript.onload = () => {
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', 'G-JYS079JHCG');
-                };
               }
             }
           }
 
-          window.addEventListener('CookieConsent', loadScriptsBasedOnConsent);
-        `}
+          window.addEventListener('CookieConsent', loadScriptsBasedOnConsent);  `}
       </Script>
 
       <body
