@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cookie, Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
@@ -37,11 +37,10 @@ export default function RootLayout({
         {`
           function loadScriptsBasedOnConsent() {
             if (Cookiebot && Cookiebot.consents) {
-              // Handle statistics consent
               if (Cookiebot.consents.statistics) {
                 // Load Google Analytics
                 console.log("Loading Google Analytics");
-                console.log({Cookiebot:Cookiebot.consents});
+                console.log({Cookiebot: Cookiebot.consents});
                 const gtagScript = document.createElement('script');
                 gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-JYS079JHCG";
                 gtagScript.async = true;
@@ -53,10 +52,6 @@ export default function RootLayout({
                   gtag('js', new Date());
                   gtag('config', 'G-JYS079JHCG');
                 };
-              } else {
-                // Remove Google Analytics cookies if consent is withdrawn
-                document.cookie = '_ga=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-                document.cookie = '_gid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
               }
             }
           }
