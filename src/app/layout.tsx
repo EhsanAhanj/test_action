@@ -26,15 +26,48 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Script
-        id="usercentrics-cmp"
-        src="https://web.cmp.usercentrics.eu/ui/loader.js"
-        data-settings-id="ig-ythXOuLqkBL"
-        strategy="afterInteractive"
+        id="cookiebot-banner"
+        src="https://consent.cookiebot.com/uc.js"
+        data-cbid="217a9fe1-4c5a-47bc-b6cd-7e498392da7f"
+        data-blockingmode="auto"
+        type="text/javascript"
+        strategy="beforeInteractive"
       />
+      <Script id="cookiebot-init" strategy="afterInteractive">
+        {`
+          function loadScriptsBasedOnConsent() {
+            if (Cookiebot && Cookiebot.consents) {
+              if (Cookiebot.consents.statistics) {
+                // Load Google Analytics
+                const gtagScript = document.createElement('script');
+                gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-JYS079JHCG";
+                gtagScript.async = true;
+                document.head.appendChild(gtagScript);
+
+                gtagScript.onload = () => {
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', 'G-JYS079JHCG');
+                };
+              }
+            }
+          }
+
+          window.addEventListener('CookieConsent', loadScriptsBasedOnConsent);
+        `}
+      </Script>
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <Script
+          id="cookie-declaration"
+          src="https://consent.cookiebot.com/217a9fe1-4c5a-47bc-b6cd-7e498392da7f/cd.js"
+          type="text/javascript"
+          async
+        />
       </body>
     </html>
   );
