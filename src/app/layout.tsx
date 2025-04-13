@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
+import GoogleScripts from "./Components/Scripts/GoogleScripts";
+import ConsentManager from "./Components/ConsentManager";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,63 +26,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Script
-        id="cookiebot-banner"
-        src="https://consent.cookiebot.com/uc.js"
-        data-cbid="217a9fe1-4c5a-47bc-b6cd-7e498392da7f"
-        data-blockingmode="auto"
-        type="text/javascript"
-        strategy="beforeInteractive"
-      />
-      <Script id="cookiebot-init" strategy="afterInteractive">
-        {`
-          function loadScriptsBasedOnConsent() {
-            console.log("Cookiebot loaded");
-            console.log({ Cookiebot: Cookiebot });
-
-            if (Cookiebot && Cookiebot.consent) {
-              if (Cookiebot.consent.statistics) {
-                // Load Google Analytics
-                console.log("Loading Google Analytics");
-                const gtagScript = document.createElement('script');
-                gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-JYS079JHCG";
-                gtagScript.async = true;
-                document.head.appendChild(gtagScript);
-
-                gtagScript.onload = () => {
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', 'G-JYS079JHCG');
-                };
-              } else {
-                console.log("Statistics consent not given");
-              }
-
-              if (Cookiebot.consent.marketing) {
-                console.log("Marketing consent given");
-                // Load marketing-related scripts here
-              } else {
-                console.log("Marketing consent not given");
-              }
-            } else {
-              console.log("Cookiebot or consent not available");
-            }
-          }
-
-          // Call the function immediately if Cookiebot is already loaded
-          if (typeof Cookiebot !== "undefined") {
-            loadScriptsBasedOnConsent();
-          }
-
-          // Listen for the CookieConsent event
-          window.addEventListener('CookieConsent', loadScriptsBasedOnConsent);
-        `}
-      </Script>
-
+      <GoogleScripts />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ConsentManager />
         {children}
       </body>
     </html>
