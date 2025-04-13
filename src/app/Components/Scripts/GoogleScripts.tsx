@@ -1,37 +1,10 @@
 "use client";
 
 import Script from "next/script";
-import React, { useEffect } from "react";
 
 const GoogleScripts = () => {
   const isDev = process.env.NODE_ENV === "development";
   const gtagId = "G-JYS079JHCG";
-
-  useEffect(() => {
-    interface Consent {
-      ad_storage?: string;
-      analytics_storage?: string;
-      functionality_storage?: string;
-      security_storage?: string;
-    }
-
-    const updateConsent = (consent: Consent) => {
-      if (window.gtag) {
-        window.gtag("consent", "update", consent as Record<string, unknown>);
-      }
-    };
-
-    // Example: Listen for consent changes from a CMP
-    window.addEventListener("consentChange", (event) => {
-      updateConsent((event as CustomEvent).detail);
-    });
-
-    return () => {
-      window.removeEventListener("consentChange", (event) => {
-        updateConsent((event as CustomEvent).detail);
-      });
-    };
-  }, []);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import GoogleScripts from "./Components/Scripts/GoogleScripts";
-import ConsentManager from "./Components/ConsentManager";
+import ConsentManager from "./Components/useConsentManager";
 import "./globals.css";
 
 const geistSans = Geist({
